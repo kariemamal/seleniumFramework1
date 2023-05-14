@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="walletHub Review">
+    <parameter name="browser" value="chrome"></parameter>   <!--    Here you can set kind of browser you need to test under it -->
+    <parameter name="url" value="https://wallethub.com/profile/13732055i"></parameter>  <!--    Here you can set ur of website you  need to test it -->
+    <test name="walletHub Review">
+        <classes>
+            <class name="tests.ReviewTest"></class>
+        </classes>
+    </test>
+</suite>
