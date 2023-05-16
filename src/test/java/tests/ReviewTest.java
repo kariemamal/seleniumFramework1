@@ -1,29 +1,31 @@
 package tests;
 
+import org.example.pages.ReviewPage;
 import org.example.pages.WalletHubProfilePage;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ReviewTest extends TestBase {
 
     WalletHubProfilePage walletHubProfilePage;
+    ReviewPage reviewPage;
 
     @Test
-    public void rateWithFourStars() {
+    public void rateWithFourStars() throws InterruptedException {
         walletHubProfilePage = new WalletHubProfilePage(webDriver);
-        webDriver.navigate().refresh();
-        Actions actions = new Actions(webDriver);
-        actions.perform();
-        walletHubProfilePage.rate(4);
+        walletHubProfilePage.hoverRate(4);
+        Assert.assertTrue(webDriver.findElements(walletHubProfilePage.reviewStarts).get(3).getAttribute("aria-checked").equalsIgnoreCase("true"));
+    }
 
-        System.out.println(walletHubProfilePage.reviewStarts.get(0).getAttribute("aria-checked"));
-        System.out.println(walletHubProfilePage.reviewStarts.get(1).getAttribute("aria-checked"));
-        System.out.println(walletHubProfilePage.reviewStarts.get(2).getAttribute("aria-checked"));
-        System.out.println(walletHubProfilePage.reviewStarts.get(3).getAttribute("aria-checked"));
-        System.out.println(walletHubProfilePage.reviewStarts.get(4).getAttribute("aria-checked"));
-//        Assert.assertTrue(walletHubProfilePage.reviewStarts.get(4).getAttribute("aria-checked"));
-        walletHubProfilePage.reviewStarts.get(3).click();
+
+    String reviewText="WalletHub checks all the most important boxes when it comes to security. It uses the same 128-bit encryption and SSL FDIC-insured financial institutions use. It supports multi-factor authentication. Personal data collected at signup is anonymized once stored. Plus, the registration process requires only the last four digits of your social security number, not the whole thing.";
+
+    @Test
+    public void submitReview(){
+        walletHubProfilePage.rateWithStars(4);
+        reviewPage= new ReviewPage(webDriver);
+        reviewPage.selectInsurance(2);
+        reviewPage.submitReview(reviewText);
     }
 
 }
